@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="cursomvcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aluno">
+          <Key>
+            <PropertyRef Name="AlunoID" />
+          </Key>
+          <Property Name="AlunoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlunoNome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AssuntoID" Type="int" Nullable="false" />
+          <Property Name="DepartamentoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Aluno_Materia">
+          <Key>
+            <PropertyRef Name="AlunoMateriaID" />
+          </Key>
+          <Property Name="AlunoMateriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlunoID" Type="int" Nullable="false" />
+          <Property Name="MateriaID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="assunto">
+          <Key>
+            <PropertyRef Name="AssuntoID" />
+          </Key>
+          <Property Name="AssuntoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescAssunto" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="departamento">
+          <Key>
+            <PropertyRef Name="DepartamentoID" />
+          </Key>
+          <Property Name="DepartamentoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartamentoNome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DepartamentoSigla" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="materia">
+          <Key>
+            <PropertyRef Name="MateriaID" />
+          </Key>
+          <Property Name="MateriaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MateriaNome" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Telefone">
+          <Key>
+            <PropertyRef Name="TelefoneID" />
+          </Key>
+          <Property Name="TelefoneID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TelefoneDDD" Type="int" Nullable="false" />
+          <Property Name="TelefoneNumero" Type="int" Nullable="false" />
+          <Property Name="AlunoID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_aluno_assunto">
+          <End Role="assunto" Type="Self.assunto" Multiplicity="1" />
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assunto">
+              <PropertyRef Name="AssuntoID" />
+            </Principal>
+            <Dependent Role="Aluno">
+              <PropertyRef Name="AssuntoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_departamento">
+          <End Role="departamento" Type="Self.departamento" Multiplicity="1" />
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamento">
+              <PropertyRef Name="DepartamentoID" />
+            </Principal>
+            <Dependent Role="Aluno">
+              <PropertyRef Name="DepartamentoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_Materia_Aluno">
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+          <End Role="Aluno_Materia" Type="Self.Aluno_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aluno">
+              <PropertyRef Name="AlunoID" />
+            </Principal>
+            <Dependent Role="Aluno_Materia">
+              <PropertyRef Name="AlunoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_Materia_materia">
+          <End Role="materia" Type="Self.materia" Multiplicity="1" />
+          <End Role="Aluno_Materia" Type="Self.Aluno_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materia">
+              <PropertyRef Name="MateriaID" />
+            </Principal>
+            <Dependent Role="Aluno_Materia">
+              <PropertyRef Name="MateriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telefone_Aluno">
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+          <End Role="Telefone" Type="Self.Telefone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aluno">
+              <PropertyRef Name="AlunoID" />
+            </Principal>
+            <Dependent Role="Telefone">
+              <PropertyRef Name="AlunoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cursomvcModelStoreContainer">
+          <EntitySet Name="Aluno" EntityType="Self.Aluno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Aluno_Materia" EntityType="Self.Aluno_Materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="assunto" EntityType="Self.assunto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departamento" EntityType="Self.departamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="materia" EntityType="Self.materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Telefone" EntityType="Self.Telefone" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_aluno_assunto" Association="Self.FK_aluno_assunto">
+            <End Role="assunto" EntitySet="assunto" />
+            <End Role="Aluno" EntitySet="Aluno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_departamento" Association="Self.FK_Aluno_departamento">
+            <End Role="departamento" EntitySet="departamento" />
+            <End Role="Aluno" EntitySet="Aluno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_Materia_Aluno" Association="Self.FK_Aluno_Materia_Aluno">
+            <End Role="Aluno" EntitySet="Aluno" />
+            <End Role="Aluno_Materia" EntitySet="Aluno_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_Materia_materia" Association="Self.FK_Aluno_Materia_materia">
+            <End Role="materia" EntitySet="materia" />
+            <End Role="Aluno_Materia" EntitySet="Aluno_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telefone_Aluno" Association="Self.FK_Telefone_Aluno">
+            <End Role="Aluno" EntitySet="Aluno" />
+            <End Role="Telefone" EntitySet="Telefone" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cursomvcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aluno">
+          <Key>
+            <PropertyRef Name="AlunoID" />
+          </Key>
+          <Property Name="AlunoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlunoNome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AssuntoID" Type="Int32" Nullable="false" />
+          <Property Name="DepartamentoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="assunto" Relationship="Self.FK_aluno_assunto" FromRole="Aluno" ToRole="assunto" />
+          <NavigationProperty Name="departamento" Relationship="Self.FK_Aluno_departamento" FromRole="Aluno" ToRole="departamento" />
+          <NavigationProperty Name="Aluno_Materia" Relationship="Self.FK_Aluno_Materia_Aluno" FromRole="Aluno" ToRole="Aluno_Materia" />
+          <NavigationProperty Name="Telefone" Relationship="Self.FK_Telefone_Aluno" FromRole="Aluno" ToRole="Telefone" />
+        </EntityType>
+        <EntityType Name="Aluno_Materia">
+          <Key>
+            <PropertyRef Name="AlunoMateriaID" />
+          </Key>
+          <Property Name="AlunoMateriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlunoID" Type="Int32" Nullable="false" />
+          <Property Name="MateriaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aluno" Relationship="Self.FK_Aluno_Materia_Aluno" FromRole="Aluno_Materia" ToRole="Aluno" />
+          <NavigationProperty Name="materia" Relationship="Self.FK_Aluno_Materia_materia" FromRole="Aluno_Materia" ToRole="materia" />
+        </EntityType>
+        <EntityType Name="assunto">
+          <Key>
+            <PropertyRef Name="AssuntoID" />
+          </Key>
+          <Property Name="AssuntoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescAssunto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Aluno" Relationship="Self.FK_aluno_assunto" FromRole="assunto" ToRole="Aluno" />
+        </EntityType>
+        <EntityType Name="departamento">
+          <Key>
+            <PropertyRef Name="DepartamentoID" />
+          </Key>
+          <Property Name="DepartamentoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartamentoNome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartamentoSigla" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Aluno" Relationship="Self.FK_Aluno_departamento" FromRole="departamento" ToRole="Aluno" />
+        </EntityType>
+        <EntityType Name="materia">
+          <Key>
+            <PropertyRef Name="MateriaID" />
+          </Key>
+          <Property Name="MateriaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MateriaNome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Aluno_Materia" Relationship="Self.FK_Aluno_Materia_materia" FromRole="materia" ToRole="Aluno_Materia" />
+        </EntityType>
+        <EntityType Name="Telefone">
+          <Key>
+            <PropertyRef Name="TelefoneID" />
+          </Key>
+          <Property Name="TelefoneID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TelefoneDDD" Type="Int32" Nullable="false" />
+          <Property Name="TelefoneNumero" Type="Int32" Nullable="false" />
+          <Property Name="AlunoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aluno" Relationship="Self.FK_Telefone_Aluno" FromRole="Telefone" ToRole="Aluno" />
+        </EntityType>
+        <Association Name="FK_aluno_assunto">
+          <End Role="assunto" Type="Self.assunto" Multiplicity="1" />
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assunto">
+              <PropertyRef Name="AssuntoID" />
+            </Principal>
+            <Dependent Role="Aluno">
+              <PropertyRef Name="AssuntoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_departamento">
+          <End Role="departamento" Type="Self.departamento" Multiplicity="1" />
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departamento">
+              <PropertyRef Name="DepartamentoID" />
+            </Principal>
+            <Dependent Role="Aluno">
+              <PropertyRef Name="DepartamentoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_Materia_Aluno">
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+          <End Role="Aluno_Materia" Type="Self.Aluno_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aluno">
+              <PropertyRef Name="AlunoID" />
+            </Principal>
+            <Dependent Role="Aluno_Materia">
+              <PropertyRef Name="AlunoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telefone_Aluno">
+          <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+          <End Role="Telefone" Type="Self.Telefone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aluno">
+              <PropertyRef Name="AlunoID" />
+            </Principal>
+            <Dependent Role="Telefone">
+              <PropertyRef Name="AlunoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Aluno_Materia_materia">
+          <End Role="materia" Type="Self.materia" Multiplicity="1" />
+          <End Role="Aluno_Materia" Type="Self.Aluno_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materia">
+              <PropertyRef Name="MateriaID" />
+            </Principal>
+            <Dependent Role="Aluno_Materia">
+              <PropertyRef Name="MateriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cursomvcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aluno" EntityType="Self.Aluno" />
+          <EntitySet Name="Aluno_Materia" EntityType="Self.Aluno_Materia" />
+          <EntitySet Name="assunto" EntityType="Self.assunto" />
+          <EntitySet Name="departamento" EntityType="Self.departamento" />
+          <EntitySet Name="materia" EntityType="Self.materia" />
+          <EntitySet Name="Telefone" EntityType="Self.Telefone" />
+          <AssociationSet Name="FK_aluno_assunto" Association="Self.FK_aluno_assunto">
+            <End Role="assunto" EntitySet="assunto" />
+            <End Role="Aluno" EntitySet="Aluno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_departamento" Association="Self.FK_Aluno_departamento">
+            <End Role="departamento" EntitySet="departamento" />
+            <End Role="Aluno" EntitySet="Aluno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_Materia_Aluno" Association="Self.FK_Aluno_Materia_Aluno">
+            <End Role="Aluno" EntitySet="Aluno" />
+            <End Role="Aluno_Materia" EntitySet="Aluno_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telefone_Aluno" Association="Self.FK_Telefone_Aluno">
+            <End Role="Aluno" EntitySet="Aluno" />
+            <End Role="Telefone" EntitySet="Telefone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Aluno_Materia_materia" Association="Self.FK_Aluno_Materia_materia">
+            <End Role="materia" EntitySet="materia" />
+            <End Role="Aluno_Materia" EntitySet="Aluno_Materia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cursomvcModelStoreContainer" CdmEntityContainer="cursomvcEntities">
+          <EntitySetMapping Name="Aluno">
+            <EntityTypeMapping TypeName="cursomvcModel.Aluno">
+              <MappingFragment StoreEntitySet="Aluno">
+                <ScalarProperty Name="AlunoID" ColumnName="AlunoID" />
+                <ScalarProperty Name="AlunoNome" ColumnName="AlunoNome" />
+                <ScalarProperty Name="AssuntoID" ColumnName="AssuntoID" />
+                <ScalarProperty Name="DepartamentoID" ColumnName="DepartamentoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aluno_Materia">
+            <EntityTypeMapping TypeName="cursomvcModel.Aluno_Materia">
+              <MappingFragment StoreEntitySet="Aluno_Materia">
+                <ScalarProperty Name="AlunoMateriaID" ColumnName="AlunoMateriaID" />
+                <ScalarProperty Name="AlunoID" ColumnName="AlunoID" />
+                <ScalarProperty Name="MateriaID" ColumnName="MateriaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="assunto">
+            <EntityTypeMapping TypeName="cursomvcModel.assunto">
+              <MappingFragment StoreEntitySet="assunto">
+                <ScalarProperty Name="AssuntoID" ColumnName="AssuntoID" />
+                <ScalarProperty Name="DescAssunto" ColumnName="DescAssunto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departamento">
+            <EntityTypeMapping TypeName="cursomvcModel.departamento">
+              <MappingFragment StoreEntitySet="departamento">
+                <ScalarProperty Name="DepartamentoID" ColumnName="DepartamentoID" />
+                <ScalarProperty Name="DepartamentoNome" ColumnName="DepartamentoNome" />
+                <ScalarProperty Name="DepartamentoSigla" ColumnName="DepartamentoSigla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="materia">
+            <EntityTypeMapping TypeName="cursomvcModel.materia">
+              <MappingFragment StoreEntitySet="materia">
+                <ScalarProperty Name="MateriaID" ColumnName="MateriaID" />
+                <ScalarProperty Name="MateriaNome" ColumnName="MateriaNome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Telefone">
+            <EntityTypeMapping TypeName="cursomvcModel.Telefone">
+              <MappingFragment StoreEntitySet="Telefone">
+                <ScalarProperty Name="TelefoneID" ColumnName="TelefoneID" />
+                <ScalarProperty Name="TelefoneDDD" ColumnName="TelefoneDDD" />
+                <ScalarProperty Name="TelefoneNumero" ColumnName="TelefoneNumero" />
+                <ScalarProperty Name="AlunoID" ColumnName="AlunoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
