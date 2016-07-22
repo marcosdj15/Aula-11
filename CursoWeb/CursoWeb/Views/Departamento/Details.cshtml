@@ -1,0 +1,34 @@
+﻿@model CursoWeb.Models.departamento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>departamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartamentoNome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartamentoNome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartamentoSigla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartamentoSigla)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DepartamentoID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
